@@ -5,8 +5,8 @@ wanted-pre-onboarding-backend assignment
 
 1. 엔티티 모델링
  - 사용자 (User)
-  - UserId, 사용자 이름을 속성으로 가짐
-  - Primary Key로 UserId 사용
+ -- UserId, 사용자 이름을 속성으로 가짐
+ -- Primary Key로 UserId 사용
  - 회사 (Company)
  - 채용공고 (Recruitment)
  - 지원내역 (Appliement)
