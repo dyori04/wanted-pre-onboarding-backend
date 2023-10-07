@@ -41,3 +41,7 @@ wanted-pre-onboarding-backend assignment
  
 ## 구현과정
 
+1. 회사, 채용공고 엔티티 구현
+----
+2. 채용공고 등록 (회사등록), 채용공고 수정, 채용공고 삭제 기능 구현
+----
