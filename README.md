@@ -29,23 +29,23 @@ wanted-pre-onboarding-backend assignment
 ### 2. 서비스별 요구사항
    #### 1. 채용공고 등록
    - 회사는 채용공고 엔티티 구조를 사용하여 채용공고 등록
-        URL은 /recruit/advertise, method는 POST
+        URL은 /recruitment/advertise, method는 POST
    - 회사 정보가 데이터베이스에 존재하지 않는 경우, 오류 출력 (회사 등록이 필요함)
    - 채용공고의 FK, PK가 채워지지 않은 경우, 오류 출력 (속성 ***가 채워지지 않음)
    - field가 채용공고 엔티티 구조에 존재하지 않을 경우 오류 출력 (속성 ***는 존재하지 않음)
    #### 2. 채용공고 수정
    - 회사명을 제외한 채용공고의 속성을 수정
-   - URL은 /recruit/modify, method는 POST로 수행하며 field와 value를 서버에 전달함
+   - URL은 /recruitment/modify, method는 POST로 수행하며 field와 value를 서버에 전달함
    - field가 채용공고 엔티티 구조에 존재하지 않을 경우 오류 출력 (속성 ***는 존재하지 않음)
    - RecruitId와 회사명 중 하나를 포함하는 경우 오류 출력 (속성 ***는 수정할 수 없음)
    #### 3. 채용공고 삭제
    - RecruitId를 전달받아 채용공고를 삭제함
-   - URL은 /recruit/remove, method는 POST
+   - URL은 /recruitment/remove, method는 POST
    - 존재하지 않는 채용공고 Id를 전달받았을 경우 오류 출력 (존재하지 않는 채용공고)
    #### 4. 채용공고 목록 불러오기
    1. 채용공고 목록 확인
        - 전체 채용공고를 불러오되, 채용 상세내용은 제외
-       - URL은 /recruit/listall, method는 GET 
+       - URL은 /recruitment/listall, method는 GET 
    2. 채용공고 검색
        - 특정 조건에 맞는 채용공고를 불러오되, 채용 상세내용은 제외
        - URL은 /recruit/list/search?, method는 GET
