@@ -37,7 +37,7 @@ wanted-pre-onboarding-backend assignment
    - 회사명을 제외한 채용공고의 속성을 수정
    - URL은 /recruitment/modify, method는 POST로 수행하며 field와 value를 서버에 전달함
    - field가 채용공고 엔티티 구조에 존재하지 않을 경우 오류 출력 (속성 ***는 존재하지 않음)
-   - RecruitId와 회사명 중 하나를 포함하는 경우 오류 출력 (속성 ***는 수정할 수 없음)
+   - 기존 채용공고의 회사명과 다를 경우 오류 출력 (속성 ***는 수정할 수 없음)
    #### 3. 채용공고 삭제
    - RecruitId를 전달받아 채용공고를 삭제함
    - URL은 /recruitment/remove, method는 POST
