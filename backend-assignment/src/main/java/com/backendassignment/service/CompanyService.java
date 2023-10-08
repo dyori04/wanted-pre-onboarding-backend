@@ -1,11 +1,9 @@
 package com.backendassignment.service;
 
 import org.springframework.stereotype.Service;
-
 import com.backendassignment.dto.CompanyDTO;
 import com.backendassignment.entity.CompanyEntity;
 import com.backendassignment.repository.CompanyRepository;
-
 import lombok.RequiredArgsConstructor;
 
 @Service
