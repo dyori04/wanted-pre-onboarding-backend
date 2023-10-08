@@ -14,9 +14,9 @@ wanted-pre-onboarding-backend assignment
    - Foreign Key로 지정되기 위하여 Company Name은 Unique로 지정되어야 함
   
  * 채용공고 (Recruitment)
-   - RecruitId, CompanyId, CompanyName, Country, Region, RecruitPosition, RecruitReward, TechStack, RecruitBody을 속성으로 가짐
+   - RecruitId, CompanyId, Country, Region, RecruitPosition, RecruitReward, TechStack, RecruitBody을 속성으로 가짐
    - Primary Key로 RecruitId를 사용
-   - 회사와 1:N 관계, Foreign Key로 CompanyId와 CompanyName 사용
+   - 회사와 1:N 관계, Foreign Key로 CompanyId 사용
    - 외래키 옵션은 Cascade로, 회사 데이터 삭제 시 채용공고 데이터도 삭제
   
  * 지원내역 (Appliement)
