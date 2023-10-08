@@ -21,7 +21,7 @@ import com.backendassignment.dto.UserDTO;
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String userName;
 

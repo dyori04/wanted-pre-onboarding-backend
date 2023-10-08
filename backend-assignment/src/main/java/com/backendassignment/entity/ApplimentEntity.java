@@ -16,6 +16,6 @@ public class ApplimentEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     
 }

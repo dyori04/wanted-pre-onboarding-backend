@@ -11,7 +11,7 @@ import com.backendassignment.entity.UserEntity;
 @NoArgsConstructor
 @ToString
 public class UserDTO {
-    private long id;
+    private Long id;
     private String userName;
 
     public static UserDTO toUserDTO(UserEntity userEntity){

@@ -11,7 +11,7 @@ import com.backendassignment.entity.CompanyEntity;
 @NoArgsConstructor
 @ToString
 public class CompanyDTO {
-    private long id;
+    private Long id;
     private String companyName;    
 
     public static CompanyDTO toCompanyDTO(CompanyEntity companyEntity){

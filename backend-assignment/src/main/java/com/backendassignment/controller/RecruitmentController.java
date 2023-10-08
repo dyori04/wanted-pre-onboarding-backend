@@ -3,21 +3,31 @@ package com.backendassignment.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.beans.BeanWrapperImpl;
 import com.backendassignment.dto.CompanyDTO;
 import com.backendassignment.dto.RecruitmentDTO;
 import com.backendassignment.repository.CompanyRepository;
 import com.backendassignment.repository.RecruitmentRepository;
 import com.backendassignment.service.CompanyService;
 import com.backendassignment.service.RecruitmentService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+
+import java.util.Map;
+import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
-@ResponseBody
 @RequestMapping("/recruitment")
 public class RecruitmentController {
     
@@ -26,10 +36,40 @@ public class RecruitmentController {
     
     //Recruitment Advertisement
     @PostMapping("/advertise")
-    public String recruitmentAdvertise(@ModelAttribute RecruitmentDTO recruitmentDTO) {
+    public ResponseEntity<String> recruitmentAdvertise(@RequestBody RecruitmentDTO recruitmentDTO) {
         
-        System.out.println("requested Recruitment DTO = " + recruitmentDTO);
-        recruitmentService.saveRecruitment(recruitmentDTO);
-        return "company " + recruitmentDTO.getCompanyName()+"recruitment saved"; 
+        try {
+            System.out.println("requested Recruitment DTO = " + recruitmentDTO);
+            recruitmentService.saveRecruitment(recruitmentDTO);
+            return new ResponseEntity<>("company " + recruitmentDTO.getCompanyName()+"recruitment saved", HttpStatus.CREATED); 
+        } catch (EntityNotFoundException e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/modify")
+    public ResponseEntity<String> recuritmentModify(@RequestBody Map<String, Object> payload) {
+        
+        Set<String> allowedFields = Set.of("id", "country", "region", "recruitPosition", "recruitReward", "techStack", "recruitBody", "companyName");
+        Set<String> fieldsInRequest = payload.keySet();
+        
+        for (String field : fieldsInRequest) {
+            if (!allowedFields.contains(field)) {
+                return new ResponseEntity<>(
+                    "Field [" + field + "] is not an allowed field.",
+                    HttpStatus.BAD_REQUEST
+                );
+            }
+        }
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        RecruitmentDTO recruitmentDTO = objectMapper.convertValue(payload, RecruitmentDTO.class);
+    
+        try {
+            recruitmentService.modifyRecruitment(recruitmentDTO);
+            return new ResponseEntity<>("Recruitment Updated successfully - recruit ID : " + recruitmentDTO.getId().toString(),HttpStatus.CREATED);
+        } catch (IllegalArgumentException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }

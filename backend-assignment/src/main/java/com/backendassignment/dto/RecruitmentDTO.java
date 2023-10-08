@@ -12,8 +12,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class RecruitmentDTO {
-    private long id;
-    private long companyId; // CompanyEntity의 ID 참조
+    private Long id;
+    private Long companyId; // CompanyEntity의 ID 참조
     private String companyName; // to advertise recruitment using company name
     private String country;
     private String region;
@@ -22,7 +22,7 @@ public class RecruitmentDTO {
     private String techStack;
     private String recruitBody;
 
-    public static RecruitmentDTO toCompanyDTO(RecruitmentEntity recruitmentEntity) {
+    public static RecruitmentDTO toRecruitmentDTO(RecruitmentEntity recruitmentEntity) {
         RecruitmentDTO recruitmentDTO = new RecruitmentDTO();
         recruitmentDTO.setId(recruitmentEntity.getId());
         recruitmentDTO.setCompanyId(recruitmentEntity.getCompany().getId()); 
