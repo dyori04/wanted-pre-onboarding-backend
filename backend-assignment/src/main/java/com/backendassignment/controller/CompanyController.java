@@ -28,6 +28,7 @@ public class CompanyController {
     public String registration(@RequestBody CompanyDTO companyDTO) {
         System.out.println("requested Company DTO = " + companyDTO);
         companyService.save(companyDTO);
+        
         return "requested Company Name = " + companyDTO.getCompanyName();
     }
 }
