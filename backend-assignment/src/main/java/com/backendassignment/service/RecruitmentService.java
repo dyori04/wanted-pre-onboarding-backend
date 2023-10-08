@@ -1,6 +1,5 @@
 package com.backendassignment.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.backendassignment.dto.RecruitmentDTO;
 import com.backendassignment.entity.RecruitmentEntity;
@@ -27,6 +26,7 @@ public class RecruitmentService {
         
         recruitmentRepository.save(recruitmentEntity);
     }
+
     public void modifyRecruitment(RecruitmentDTO recruitmentDTO) {
         if(recruitmentDTO.getId() <= 0) {
             throw new IllegalArgumentException("Invalid Recruitment ID");
@@ -40,11 +40,20 @@ public class RecruitmentService {
 
         if (recruitmentDTO.getCompanyName() != null && 
         !recruitmentDTO.getCompanyName().equals(existingRecruitment.get().getCompany().getCompanyName())) {
-        throw new IllegalArgumentException("Mismatched companyName. Cannot update companyName through this method.");
+        throw new IllegalArgumentException("Mismatched companyName ( original company name :" + 
+        existingRecruitment.get().getCompany().getCompanyName() +
+        ") Cannot update companyName through this method.");
         }
-        
+
         RecruitmentEntity updatedRecuritment = RecruitmentEntity.toRecruitmentEntity(recruitmentDTO, existingRecruitment.get().getCompany());
         recruitmentRepository.save(updatedRecuritment);
+    }
+
+    public void removeRecruitment(Long recruitmentId){
+        if (!recruitmentRepository.existsById(recruitmentId)) {
+            throw new IllegalArgumentException("Recruitment with ID \'" + recruitmentId + "\' not exists");
+        }
+        recruitmentRepository.deleteById(recruitmentId);
     }
 
 }

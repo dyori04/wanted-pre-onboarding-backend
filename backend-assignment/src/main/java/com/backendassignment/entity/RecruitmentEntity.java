@@ -28,7 +28,7 @@ public class RecruitmentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "companyId", nullable = false)
      private CompanyEntity company;
 
