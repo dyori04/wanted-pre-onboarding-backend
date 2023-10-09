@@ -33,6 +33,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.Map;
 import java.util.Set;
 import java.util.List;
+import java.util.Collections;
 
 @Controller
 @RequiredArgsConstructor
@@ -97,5 +98,22 @@ public class RecruitmentController {
     public ResponseEntity<List<RecruitmentDTO>> listAllRecruitments(){
         List<RecruitmentDTO> recruitments = recruitmentService.getAllRecruitmentsWithoutBody();
         return new ResponseEntity<>(recruitments, HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    @JsonView(RecruitmentDTO.View.Public.class)
+    public ResponseEntity<List<RecruitmentDTO>> searchRecruitments(@RequestParam(required =  false) String field, @RequestParam String value) {
+        try {
+            List<RecruitmentDTO> recruitments;
+            if (field == null || field.trim().isEmpty()) {
+                recruitments = recruitmentService.searchRecruitmentsForValueOnly(value);
+            }
+            else {
+                recruitments =  recruitmentService.searchRecruitments(field, value);
+            }
+            return ResponseEntity.ok(recruitments);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Collections.emptyList());
+        }
     }
 }

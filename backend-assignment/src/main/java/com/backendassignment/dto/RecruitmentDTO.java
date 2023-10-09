@@ -49,6 +49,7 @@ public class RecruitmentDTO {
         RecruitmentDTO recruitmentDTO = new RecruitmentDTO();
         recruitmentDTO.setId(recruitmentEntity.getId());
         recruitmentDTO.setCompanyId(recruitmentEntity.getCompany().getId()); 
+        recruitmentDTO.setCompanyName(recruitmentEntity.getCompany().getCompanyName());
         recruitmentDTO.setCountry(recruitmentEntity.getCountry());
         recruitmentDTO.setRegion(recruitmentEntity.getRegion());
         recruitmentDTO.setRecruitPosition(recruitmentEntity.getRecruitPosition());
