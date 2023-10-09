@@ -1,4 +1,6 @@
 package com.backendassignment.dto;
+import java.util.List;
+
 import com.backendassignment.entity.RecruitmentEntity;
 import com.fasterxml.jackson.annotation.JsonView;
 

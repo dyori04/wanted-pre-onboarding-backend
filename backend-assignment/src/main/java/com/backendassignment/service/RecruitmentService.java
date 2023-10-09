@@ -3,6 +3,7 @@ package com.backendassignment.service;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import com.backendassignment.dto.RecruitmentDTO;
+import com.backendassignment.dto.RecruitmentDetailsResponse;
 import com.backendassignment.entity.RecruitmentEntity;
 import com.backendassignment.entity.CompanyEntity;
 import com.backendassignment.repository.CompanyRepository;
@@ -22,6 +23,9 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.naming.NameNotFoundException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -152,6 +156,24 @@ public class RecruitmentService {
             return cq.where(cb.or(predicates.toArray(new Predicate[0]))).getRestriction();
             // Generate Query using conditions in predicates
         };
+    }
+
+    public RecruitmentDetailsResponse getRecruitmentDetails(long recruitmentId){  
+        RecruitmentEntity searchedRecruitment = recruitmentRepository.findById(recruitmentId)
+        .orElseThrow(() -> new IllegalArgumentException("Recruitment not Found"));
+        
+        List<Long> otherRecruitments = recruitmentRepository
+        .findByCompany(searchedRecruitment.getCompany())
+        .stream()
+        .filter(e -> !e.getId().equals(recruitmentId))
+        .map(RecruitmentEntity::getId)
+        .collect(Collectors.toList());
+
+        RecruitmentDetailsResponse response = new RecruitmentDetailsResponse();
+        response.setRecruitments(RecruitmentDTO.toRecruitmentDTO(searchedRecruitment));
+        response.setOtherRecruitmentsByCompany(otherRecruitments);
+
+        return response;
     }
 
 }

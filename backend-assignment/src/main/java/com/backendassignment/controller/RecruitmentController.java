@@ -1,7 +1,7 @@
 package com.backendassignment.controller;
 
 import org.springframework.stereotype.Controller;
-
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,13 +17,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 
 import com.backendassignment.dto.CompanyDTO;
 import com.backendassignment.dto.RecruitmentDTO;
+import com.backendassignment.dto.RecruitmentDetailsResponse;
 import com.backendassignment.repository.CompanyRepository;
 import com.backendassignment.repository.RecruitmentRepository;
 import com.backendassignment.service.CompanyService;
 import com.backendassignment.service.RecruitmentService;
+
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -32,6 +35,9 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
 import java.util.Set;
+
+import javax.naming.NameNotFoundException;
+
 import java.util.List;
 import java.util.Collections;
 
@@ -114,6 +120,16 @@ public class RecruitmentController {
             return ResponseEntity.ok(recruitments);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(Collections.emptyList());
+        }
+    }
+
+    @GetMapping("details")
+    public ResponseEntity<RecruitmentDetailsResponse> getReruitmentDetails(@RequestParam long recruitmentId){
+        try {
+            RecruitmentDetailsResponse response = recruitmentService.getRecruitmentDetails(recruitmentId);
+           return new ResponseEntity<RecruitmentDetailsResponse>(response, HttpStatus.OK);
+        } catch (IllegalArgumentException e)  {
+            return ResponseEntity.badRequest().body(null);
         }
     }
 }
