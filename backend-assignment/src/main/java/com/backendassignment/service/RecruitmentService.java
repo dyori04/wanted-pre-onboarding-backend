@@ -12,8 +12,12 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.metamodel.Attribute;
+
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
@@ -97,8 +101,15 @@ public class RecruitmentService {
             for (Map.Entry<String, String> entry : params.entrySet()) {
                 String key = entry.getKey();
                 String value = entry.getValue();
+                
+                //search using "companyName"
+                if ("companyName".equals(key)) {
+                    Join<RecruitmentEntity, CompanyEntity> companyJoin = root.join("company", JoinType.INNER);
+                    predicates.add(cb.like(companyJoin.get("companyName"), "%" + value + "%"));
+                    continue;
+                }
 
-            // Check if the entity has the provided field.
+                // Check if the entity has the provided field.
                 try {
                 // This checks if the field exists in the entity.
                     root.get(key);
@@ -133,6 +144,9 @@ public class RecruitmentService {
                         predicates.add(cb.like(root.get(attributeName),"%" + value + "%"));
                     }
                 }
+                        // companyName에 대한 검색을 위한 join
+            Join<RecruitmentEntity, CompanyEntity> companyJoin = root.join("company", JoinType.INNER);
+            predicates.add(cb.like(companyJoin.get("companyName"), "%" + value + "%"));
             }
 
             return cq.where(cb.or(predicates.toArray(new Predicate[0]))).getRestriction();
