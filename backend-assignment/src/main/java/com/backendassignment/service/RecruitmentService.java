@@ -63,8 +63,8 @@ public class RecruitmentService {
         ") Cannot update companyName through this method.");
         }
 
-        RecruitmentEntity updatedRecuritment = RecruitmentEntity.toRecruitmentEntity(recruitmentDTO, existingRecruitment.get().getCompany());
-        recruitmentRepository.save(updatedRecuritment);
+        RecruitmentEntity updatedRecruitment = RecruitmentEntity.toRecruitmentEntity(recruitmentDTO, existingRecruitment.get().getCompany());
+        recruitmentRepository.save(updatedRecruitment);
     }
 
     public void removeRecruitment(Long recruitmentId){

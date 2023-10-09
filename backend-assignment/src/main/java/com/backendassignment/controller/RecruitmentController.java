@@ -19,11 +19,8 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 
-import com.backendassignment.dto.CompanyDTO;
 import com.backendassignment.dto.RecruitmentDTO;
 import com.backendassignment.dto.RecruitmentDetailsResponse;
-import com.backendassignment.repository.CompanyRepository;
-import com.backendassignment.repository.RecruitmentRepository;
 import com.backendassignment.service.CompanyService;
 import com.backendassignment.service.RecruitmentService;
 import com.backendassignment.service.ApplymentService;
@@ -65,7 +62,7 @@ public class RecruitmentController {
     }
 
     @PostMapping("/modify")
-    public ResponseEntity<String> recuritmentModify(@RequestBody Map<String, Object> payload) {
+    public ResponseEntity<String> recruitmentModify(@RequestBody Map<String, Object> payload) {
         
         // to check unavailable fields
         Set<String> allowedFields = Set.of("id", "country", "region", "recruitPosition", "recruitReward", "techStack", "recruitBody", "companyName");
@@ -92,10 +89,10 @@ public class RecruitmentController {
     }
 
     @DeleteMapping("/remove/{recruitmentId}")
-    public ResponseEntity<String> recuritmentRemove(@PathVariable Long recruitmentId){
+    public ResponseEntity<String> recruitmentRemove(@PathVariable Long recruitmentId){
         try {
             recruitmentService.removeRecruitment(recruitmentId);
-            return new ResponseEntity<>("Recuritment with ID \'" + recruitmentId + "\' was successfully removed", HttpStatus.OK);
+            return new ResponseEntity<>("Recruitment with ID \'" + recruitmentId + "\' was successfully removed", HttpStatus.OK);
         } catch (IllegalArgumentException e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
