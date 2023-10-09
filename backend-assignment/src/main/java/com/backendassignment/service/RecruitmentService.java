@@ -115,7 +115,7 @@ public class RecruitmentService {
     }
 
     public List<RecruitmentDTO> searchRecruitmentsForValueOnly(String value){
-                Specification<RecruitmentEntity> spec = createSpecificationValueOnly(value);
+        Specification<RecruitmentEntity> spec = createSpecificationValueOnly(value);
         return recruitmentRepository.findAll(spec).stream()
             .map(RecruitmentDTO::toRecruitmentDTO)
             .collect(Collectors.toList());
@@ -135,7 +135,7 @@ public class RecruitmentService {
                 }
             }
 
-            return cq.where(predicates.toArray(new Predicate[0])).getRestriction();
+            return cq.where(cb.or(predicates.toArray(new Predicate[0]))).getRestriction();
             // Generate Query using conditions in predicates
         };
     }
