@@ -19,7 +19,7 @@ wanted-pre-onboarding-backend assignment
    - 회사와 1:N 관계, Foreign Key로 CompanyId 사용
    - 외래키 옵션은 Cascade로, 회사 데이터 삭제 시 채용공고 데이터도 삭제
   
- * 지원내역 (Appliement)
+ * 지원내역 (Applyment)
    - RecruitId, UserId를 속성으로 가짐
    - Primary Key로 RecruitId, UserId를 사용
    - 채용공고와 1:N 관계, UserId와 1:N 관계, Foreign Key로 RecruitId, UserId를 사용
@@ -59,10 +59,10 @@ wanted-pre-onboarding-backend assignment
    - 채용공고id의 회사 이름과 동일한 다른 채용공고를 질의하여 "회사가올린다른채용공고" 항목에 id 리스트 제공
    #### 6. 사용자의 채용공고 지원
    - 특정 채용공고에 UserId를 사용하여 채용공고에 지원
-   - URL은 /recruit/appliement, method는 POST
+   - URL은 /recruit/applyment, method는 POST
    - 채용공고 id가 존재하지 않는 경우, 오류 출력 (채용공고 id ***는 등록되지 않음)
    - user id가 존재하지 않는 경우, 오류 출력 (user id ***는 존재하지 않음)
-   - 기존에 지원내역이 존재하는 경우 (동일한 내용의 appliment가 존재하는 경우) 오류 출력 (채용공고id ***에 대한 user ***의 지원내역이 이미 존재함)
+   - 기존에 지원내역이 존재하는 경우 (동일한 내용의 applyment가 존재하는 경우) 오류 출력 (채용공고id ***에 대한 user ***의 지원내역이 이미 존재함)
 ## 구현과정
 
 ### 1. 회사, 채용공고 엔티티 구현
