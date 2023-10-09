@@ -14,9 +14,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.persistence.Table;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.CascadeType;
+
 import com.backendassignment.entity.CompanyEntity;
+
+import java.util.List;
 
 @Entity
 @Setter
@@ -38,6 +42,9 @@ public class RecruitmentEntity {
      private String recruitReward;
      private String techStack;
      private String recruitBody;
+
+    @OneToMany(mappedBy ="company", cascade = CascadeType.REMOVE)
+    private List<ApplymentEntity> applyments;
 
     public static RecruitmentEntity toRecruitmentEntity(RecruitmentDTO recruitmentDTO, CompanyEntity companyEntity) {
 

@@ -12,12 +12,12 @@ import com.backendassignment.entity.UserEntity;
 @ToString
 public class UserDTO {
     private Long id;
-    private String userName;
+    private String userId;
 
     public static UserDTO toUserDTO(UserEntity userEntity){
         UserDTO userDTO = new UserDTO();
         userDTO.setId(userEntity.getId());
-        userDTO.setUserName(userEntity.getUserName());
+        userDTO.setUserId(userEntity.getUserId());
         return userDTO;
     }
 }

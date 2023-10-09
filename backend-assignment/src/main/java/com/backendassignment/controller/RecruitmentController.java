@@ -124,6 +124,7 @@ public class RecruitmentController {
     }
 
     @GetMapping("details")
+    @JsonView(RecruitmentDTO.View.Internal.class)
     public ResponseEntity<RecruitmentDetailsResponse> getReruitmentDetails(@RequestParam long recruitmentId){
         try {
             RecruitmentDetailsResponse response = recruitmentService.getRecruitmentDetails(recruitmentId);

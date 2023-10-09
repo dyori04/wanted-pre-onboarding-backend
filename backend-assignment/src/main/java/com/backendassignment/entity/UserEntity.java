@@ -9,8 +9,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Table;
+
+import java.util.List;
 
 import com.backendassignment.dto.UserDTO;
 
@@ -23,12 +27,16 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String userName;
+    @Column(unique = true)
+    private String userId;
+
+    @OneToMany(mappedBy ="company", cascade = CascadeType.REMOVE)
+    private List<ApplymentEntity> applyments;
 
     public static UserEntity toUserEntity(UserDTO userDTO){
         UserEntity userEntity = new UserEntity();
         userEntity.setId(userDTO.getId());
-        userEntity.setUserName(userDTO.getUserName());
+        userEntity.setUserId(userDTO.getUserId());
         return userEntity;
     }
 
