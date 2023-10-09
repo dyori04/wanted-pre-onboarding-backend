@@ -21,16 +21,17 @@ import com.backendassignment.dto.UserDTO;
 @Entity
 @Setter
 @Getter
-@Table(name = "company_table")
+@Table(name = "user_table")
 public class UserEntity {
     @Id
+    
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true)
     private String userId;
 
-    @OneToMany(mappedBy ="company", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy ="user", cascade = CascadeType.REMOVE)
     private List<ApplymentEntity> applyments;
 
     public static UserEntity toUserEntity(UserDTO userDTO){

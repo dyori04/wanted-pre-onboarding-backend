@@ -26,6 +26,7 @@ import com.backendassignment.repository.CompanyRepository;
 import com.backendassignment.repository.RecruitmentRepository;
 import com.backendassignment.service.CompanyService;
 import com.backendassignment.service.RecruitmentService;
+import com.backendassignment.service.ApplymentService;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -48,7 +49,8 @@ public class RecruitmentController {
     
     private final CompanyService companyService;
     private final RecruitmentService recruitmentService;
-    
+    private final ApplymentService applymentService;
+
     //Recruitment Advertisement
     @PostMapping("/advertise")
     public ResponseEntity<String> recruitmentAdvertise(@RequestBody RecruitmentDTO recruitmentDTO) {
@@ -123,7 +125,7 @@ public class RecruitmentController {
         }
     }
 
-    @GetMapping("details")
+    @GetMapping("/details")
     @JsonView(RecruitmentDTO.View.Internal.class)
     public ResponseEntity<RecruitmentDetailsResponse> getReruitmentDetails(@RequestParam long recruitmentId){
         try {
@@ -131,6 +133,19 @@ public class RecruitmentController {
            return new ResponseEntity<RecruitmentDetailsResponse>(response, HttpStatus.OK);
         } catch (IllegalArgumentException e)  {
             return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    @PostMapping("/applyment")
+    public ResponseEntity<String> applyForRecruitment(@RequestBody Map<String, Object> requestBody) {
+        try{
+            String userId = (String) requestBody.get("userId");
+            Long recruitmentId = Long.valueOf(requestBody.get("recruitmentId").toString());
+            
+            applymentService.applyForRecruitment(userId, recruitmentId);
+            return new ResponseEntity<>("Applyment for " + recruitmentId + " was succeeded, user " + userId,HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

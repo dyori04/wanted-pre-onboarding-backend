@@ -27,7 +27,7 @@ public class UserController {
         System.out.println("requested User DTO = " + userDTO);
         try {
         userService.save(userDTO);
-        return new ResponseEntity<>("requested Company Name = " + userDTO.getUserId(),HttpStatus.OK);
+        return new ResponseEntity<>("requested User Name = " + userDTO.getUserId(),HttpStatus.OK);
         } catch (IllegalArgumentException e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

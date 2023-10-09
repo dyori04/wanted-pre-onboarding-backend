@@ -33,30 +33,30 @@ public class ApplymentEntity {
     @Data
     @NoArgsConstructor
     public static class ApplymentId implements Serializable {
-        private Long userId;
+        private Long userAutoId;
         private Long recruitmentId;
     }
 
     @EmbeddedId
     private ApplymentId id;
 
-    @MapsId("userId")
+    @MapsId("userAutoId")
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "id", insertable = false, nullable = false, updatable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, nullable = false, updatable = false)
     private UserEntity user;
     
     @MapsId("recruitmentId")
     @ManyToOne
-    @JoinColumn(name = "recruitmentId", referencedColumnName = "id", insertable = false, nullable = false, updatable = false)
+    @JoinColumn(name = "recruitment_id", referencedColumnName = "id", insertable = false, nullable = false, updatable = false)
     private RecruitmentEntity recruitment;
     
         public static ApplymentEntity toApplymentEntity(ApplymentDTO applymentDTO, RecruitmentEntity recruitmentEntity, UserEntity userEntity) {
 
         ApplymentEntity applymentEntity = new ApplymentEntity();
+
         ApplymentId id = new ApplymentId();
-        
-        id.setUserId(applymentDTO.getUserId());
-        id.setRecruitmentId(applymentDTO.getRecruitmentId());
+        id.setUserAutoId(userEntity.getId());
+        id.setRecruitmentId(recruitmentEntity.getId());
 
         applymentEntity.setId(id);
         applymentEntity.setRecruitment(recruitmentEntity);

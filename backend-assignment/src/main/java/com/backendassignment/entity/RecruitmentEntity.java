@@ -43,7 +43,7 @@ public class RecruitmentEntity {
      private String techStack;
      private String recruitBody;
 
-    @OneToMany(mappedBy ="company", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy ="recruitment", cascade = CascadeType.REMOVE)
     private List<ApplymentEntity> applyments;
 
     public static RecruitmentEntity toRecruitmentEntity(RecruitmentDTO recruitmentDTO, CompanyEntity companyEntity) {
