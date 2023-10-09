@@ -14,7 +14,7 @@ wanted-pre-onboarding-backend assignment
    - Foreign Key로 지정되기 위하여 Company Name은 Unique로 지정되어야 함
   
  * 채용공고 (Recruitment)
-   - RecruitId, CompanyId, Country, Region, RecruitPosition, RecruitReward, TechStack, RecruitBody을 속성으로 가짐
+   - RecruitmentId, CompanyId, Country, Region, RecruitPosition, RecruitReward, TechStack, RecruitBody을 속성으로 가짐
    - Primary Key로 RecruitId를 사용
    - 회사와 1:N 관계, Foreign Key로 CompanyId 사용
    - 외래키 옵션은 Cascade로, 회사 데이터 삭제 시 채용공고 데이터도 삭제
@@ -66,9 +66,41 @@ wanted-pre-onboarding-backend assignment
 ## 구현과정
 
 ### 1. 회사, 채용공고 엔티티 구현
-----
-### 2. 채용공고 등록 (회사등록), 채용공고 수정, 채용공고 삭제 기능 구현
+* 회사
+   - companyId, companyName을 속성으로 갖는 Entity.
+   - company_table로 데이터베이스에 구현됨
+   - 채용공고 (recruitment) 엔티티와 1:N 관계
+* 채용공고
+   - RecruitId, Company, Country, Region, RecruitPosition, RecruitReward, TechStack, RecruitBody을 속성으로 가짐
+   - recruitment_table로 데이터베이스에 구현됨
+   - 회사와 N:1 관계
+     
+---- 
+### 2. 채용공고 등록 , 채용공고 수정, 채용공고 삭제 기능 구현
+* 채용공고 등록
+    - /recruitmet/advertise를 엔드포인트로 사용, RecruitId와 CompanyId를 제외한 데이터를 받아 등록됨
+    - 존재하지 않는 회사명을 사용하여 채용공고를 등록하는 경우, 회사 등록을 먼저 수행하라는 오류 출력
+    - recruitmentEntity, recruitmentDTO, companyEntity, recruitmentRepository, recruitmentService, recruitmentController를 사용하여 기능 구현
+* 채용공고 수정
+    - /recruitment/modify를 엔드포인트로 사용,  RecruitmentId를 기준으로 CompanyId를 제외한 데이터를 받아 수정됨
+    - RecruitmentId가 기존에 존재하지 않는 경우 존재하지 않는 RecruitmentId라는 오류 출력
+    - 기존의 CompanyName과 다른 CompanyName을 수신하였을 경우 CompanyName은 수정할 수 없다는 오류 출력
+    - recruitmentEntity, recruitmentDTO, companyEntity, recruitmentRepository, recruitmentService, recruitmentController를 사용하여 기능 구현
+* 채용공고 삭제
+    - /recruitment/remove를 엔드포인트로 사용, RecruitmentId를 수신하여 해당 아이디와 동일한 Recruitment Entity 삭제
+    -  존재하지 않는 Recruitment Entity를 수신하였을 경우, 존재하지 않는 RecruitmentId라는 오류 출력
 ----
 ### 3. 채용공고 목록 불러오기 및 검색 기능 구현
+* 채용공고 목록 불러오기
+    - /recruitment/listall을 엔드포인트로 사용, recruitment_table에 존재하는 모든 entity를 전송함.
+* 검색 기능
+    - /recruitmet/search?를 엔드포인트로 사용, value를 필수 파라미터로 사용하며, field를 전달해 원하는 속성에 대해서만 질의 가능
+    - RequestParam을 Map으로 수신하여 field의 존재 유무 판단
+    - Specification을 사용하여 원하는 조회 조건을 받아올 수 있도록 함, value의 경우 모든 필드에 대해 조건을 걸며 or절로 연결되어 하나의 필드라도 조건을 만족하면 클라이언트의 응답 데이터에 포함하도록 설정
 ### 4. 채용 상세 페이지 기능 구현
+   - RecruitmentDetailsResponse라는 DTO 정의, RecruitmentDTO와 해당 Recruitment를 등록한 회사의 다른 recruitmentId를 저장하는 List<Long> otherRecruitmentsByCompany을 속성으로 가짐
+   - recruitmentRepository에 findByCompany 쿼리를 작성하여 해당 recruitment의 Company와 동일한 다른 recruitment의 Id를 불러옴
 ### 5. 채용공고 지원 기능 구현
+   - ApplymentDTO와 ApplymentEnitity 구현, 이는 User와 Recruitment에 각각 N:1의 관계를 가지며, id는 복합 키로 User의 PK와 Recruitment의 PK를 포함함
+   - 두 키 모두 Not null 설정으로, 등록되지 않은 UserId나 RecruitmentId로 생성될 경우 Exception을 출력하게 함
+   - 기존에 이미 ApplymentEntity가 등록된 경우 Exception (기존에 등록한 채용지원내역이 있음)을 출력하도록 구현함
