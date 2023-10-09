@@ -6,9 +6,15 @@ import com.backendassignment.entity.RecruitmentEntity;
 import com.backendassignment.entity.CompanyEntity;
 import com.backendassignment.repository.CompanyRepository;
 import com.backendassignment.repository.RecruitmentRepository;
+
 import jakarta.persistence.EntityNotFoundException;
+
 import lombok.RequiredArgsConstructor;
+
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -54,6 +60,19 @@ public class RecruitmentService {
             throw new IllegalArgumentException("Recruitment with ID \'" + recruitmentId + "\' not exists");
         }
         recruitmentRepository.deleteById(recruitmentId);
+    }
+
+
+    
+    public List<RecruitmentDTO> getAllRecruitmentsWithoutBody() {
+        List<RecruitmentEntity> recruitments = recruitmentRepository.findAll();
+        return recruitments.stream()
+        .map(recruitment -> {
+            RecruitmentDTO dto = RecruitmentDTO.toRecruitmentDTO(recruitment);
+            dto.setRecruitBody(null);
+            return dto;
+        })
+        .collect(Collectors.toList());
     }
 
 }
