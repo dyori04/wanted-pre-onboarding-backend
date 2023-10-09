@@ -49,7 +49,7 @@ wanted-pre-onboarding-backend assignment
    2. 채용공고 검색
        - 특정 조건에 맞는 채용공고를 불러오되, 채용 상세내용은 제외
        - URL은 /recruit/list/search?, method는 GET
-       - field 이름과 value를 Request Parameter로 설정
+       - field 이름과 value를 Request Parameter로 설정하거나, field 이름을 제외하고 value만 전달받을 수 있음
        - 존재하지 않는 field 이름을 전달받았을 경우, 오류 출력 (속성 ***는 존재하지 않음)
    #### 5. 채용 상세 페이지 (채용내용과 해당회사가 올린 다른 채용공고 포함) 출력   
    - 특정 채용 공고에 대해 채용 내용을 포함한 전체 채용공고문 출력
