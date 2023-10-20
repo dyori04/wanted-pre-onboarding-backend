@@ -104,3 +104,6 @@ wanted-pre-onboarding-backend assignment
    - ApplymentDTO와 ApplymentEnitity 구현, 이는 User와 Recruitment에 각각 N:1의 관계를 가지며, id는 복합 키로 User의 PK와 Recruitment의 PK를 포함함
    - 두 키 모두 Not null 설정으로, 등록되지 않은 UserId나 RecruitmentId로 생성될 경우 Exception을 출력하게 함
    - 기존에 이미 ApplymentEntity가 등록된 경우 Exception (기존에 등록한 채용지원내역이 있음)을 출력하도록 구현함
+
+# 합격여부
+- 합격 '~'
